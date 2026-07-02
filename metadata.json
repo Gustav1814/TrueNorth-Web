@@ -1,0 +1,6 @@
+{
+  "name": "True North Mattress Supply",
+  "description": "Premium B2B supplier of institutional mattresses for shelters, camps, university housing, healthcare, correctional facilities, and workforce accommodations across Canada.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
