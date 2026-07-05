@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'motion/react';
 import { QuoteFormData } from '../types';
 import { Send, CheckCircle2, ClipboardCheck, ArrowRight, ShieldCheck } from 'lucide-react';
 
@@ -24,6 +25,10 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [ticketId, setTicketId] = useState('');
+
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, industry: initialIndustry }));
+  }, [initialIndustry]);
 
   const industries = [
     'Shelters',
@@ -85,7 +90,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
     if (!formData.timeline) tempErrors.timeline = 'Please select a target delivery timeline.';
 
     setErrors(tempErrors);
-    return Object.keys(tempErrors).length === 0;
+    return tempErrors;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -98,12 +103,14 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateForm()) {
-      // Scroll to first error
-      const firstError = Object.keys(errors)[0];
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      const firstError = Object.keys(validationErrors)[0];
       const element = document.getElementsByName(firstError)[0];
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        window.setTimeout(() => element.focus(), 250);
       }
       return;
     }
@@ -120,7 +127,13 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
 
   if (submitted) {
     return (
-      <div id="quote-success-panel" className="bg-white border-t-4 border-brand-red p-8 md:p-12 shadow-md max-w-2xl mx-auto text-center rounded-sm">
+      <motion.div
+        id="quote-success-panel"
+        className="bg-white border-t-4 border-brand-red p-8 md:p-12 shadow-md max-w-2xl mx-auto text-center rounded-sm"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+      >
         <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-50 rounded-full mb-6 text-emerald-600">
           <CheckCircle2 className="w-10 h-10" />
         </div>
@@ -171,16 +184,19 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
         >
           Request Another Quote <ArrowRight className="w-4 h-4" />
         </button>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <form
+    <motion.form
       id="quote-request-form"
       onSubmit={handleSubmit}
       className={`bg-white border-t-4 border-brand-navy p-6 md:p-10 shadow-md rounded-sm ${className}`}
       noValidate
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="border-b border-brand-border pb-5 mb-6">
         <h3 className="font-condensed text-2xl font-bold text-brand-navy uppercase tracking-tight">
@@ -205,7 +221,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
             placeholder="Johnathan Vance"
             className={`w-full bg-brand-bg border ${
               errors.fullName ? 'border-brand-red ring-1 ring-brand-red' : 'border-brand-border'
-            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white transition-all`}
+            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white focus:shadow-saas-md transition-all`}
           />
           {errors.fullName && <p className="text-xs text-brand-red mt-1 font-medium">{errors.fullName}</p>}
         </div>
@@ -223,7 +239,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
             placeholder="Municipal Housing Authority / Camp Association"
             className={`w-full bg-brand-bg border ${
               errors.organization ? 'border-brand-red ring-1 ring-brand-red' : 'border-brand-border'
-            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white transition-all`}
+            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white focus:shadow-saas-md transition-all`}
           />
           {errors.organization && <p className="text-xs text-brand-red mt-1 font-medium">{errors.organization}</p>}
         </div>
@@ -241,7 +257,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
             placeholder="procurement@organization.ca"
             className={`w-full bg-brand-bg border ${
               errors.email ? 'border-brand-red ring-1 ring-brand-red' : 'border-brand-border'
-            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white transition-all`}
+            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white focus:shadow-saas-md transition-all`}
           />
           {errors.email && <p className="text-xs text-brand-red mt-1 font-medium">{errors.email}</p>}
         </div>
@@ -259,7 +275,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
             placeholder="e.g. +1 (555) 019-2834"
             className={`w-full bg-brand-bg border ${
               errors.phone ? 'border-brand-red ring-1 ring-brand-red' : 'border-brand-border'
-            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white transition-all`}
+            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white focus:shadow-saas-md transition-all`}
           />
           {errors.phone && <p className="text-xs text-brand-red mt-1 font-medium">{errors.phone}</p>}
         </div>
@@ -275,7 +291,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
             onChange={handleChange}
             className={`w-full bg-brand-bg border ${
               errors.industry ? 'border-brand-red ring-1 ring-brand-red' : 'border-brand-border'
-            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white transition-all`}
+            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white focus:shadow-saas-md transition-all`}
           >
             <option value="">-- Select Industry --</option>
             {industries.map((ind) => (
@@ -300,7 +316,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
             placeholder="e.g. 150 mattresses (or range)"
             className={`w-full bg-brand-bg border ${
               errors.estimatedQuantity ? 'border-brand-red ring-1 ring-brand-red' : 'border-brand-border'
-            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white transition-all`}
+            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white focus:shadow-saas-md transition-all`}
           />
           {errors.estimatedQuantity && <p className="text-xs text-brand-red mt-1 font-medium">{errors.estimatedQuantity}</p>}
         </div>
@@ -316,7 +332,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
             onChange={handleChange}
             className={`w-full bg-brand-bg border ${
               errors.province ? 'border-brand-red ring-1 ring-brand-red' : 'border-brand-border'
-            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white transition-all`}
+            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white focus:shadow-saas-md transition-all`}
           >
             <option value="">-- Select Province/Territory --</option>
             {provinces.map((prov) => (
@@ -339,7 +355,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
             onChange={handleChange}
             className={`w-full bg-brand-bg border ${
               errors.timeline ? 'border-brand-red ring-1 ring-brand-red' : 'border-brand-border'
-            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white transition-all`}
+            } rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white focus:shadow-saas-md transition-all`}
           >
             <option value="">-- Select Delivery Timeline --</option>
             {timelines.map((time) => (
@@ -363,7 +379,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
           onChange={handleChange}
           rows={4}
           placeholder="Please include sizing preferences, flame retardancy certifications required (such as CGSB standards or local codes), water resistance requirements, cover zippers, or remote site logistics directions."
-          className="w-full bg-brand-bg border border-brand-border rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white transition-all resize-y"
+          className="w-full bg-brand-bg border border-brand-border rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-brand-navy focus:bg-white focus:shadow-saas-md transition-all resize-y"
         ></textarea>
       </div>
 
@@ -384,6 +400,6 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ initialIndustry = '', clas
           {!isSubmitting && <Send className="w-4 h-4" />}
         </button>
       </div>
-    </form>
+    </motion.form>
   );
 };

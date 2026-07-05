@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { Logo } from './Logo';
 import { PageId } from '../types';
 import { Menu, X, ChevronDown, ChevronUp, Quote, ExternalLink, Mail, PhoneCall } from 'lucide-react';
@@ -34,6 +35,13 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
+  const dropdownMotion = {
+    initial: { opacity: 0, y: 10, scale: 0.98 },
+    animate: { opacity: 1, y: 0, scale: 1 },
+    exit: { opacity: 0, y: 8, scale: 0.98 },
+    transition: { duration: 0.18, ease: [0.16, 1, 0.3, 1] },
+  };
+
   const handleNavClick = (pageId: PageId) => {
     onNavigate(pageId);
     setActiveDropdown(null);
@@ -42,30 +50,38 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
 
   return (
     <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-white focus:text-brand-navy focus:px-4 focus:py-3 focus:rounded-sm focus:shadow-saas-lg focus:font-sans focus:font-bold"
+      >
+        Skip to main content
+      </a>
+
       {/* Top operational strip (extremely clean, no telemetry, pure B2B support info) */}
-      <div className="bg-brand-deep text-white text-sm py-2.5 px-4 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-white/10 relative z-50">
-        <div className="flex items-center gap-2 font-sans font-medium">
-          <span className="w-2.5 h-2.5 rounded-full bg-brand-red animate-pulse"></span>
-          <span>Commercial procurement desk and site delivery services across Canada</span>
+      <div className="bg-brand-deep text-white text-sm py-2.5 px-4 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-white/10 relative z-50 overflow-hidden">
+        <div className="min-w-0 flex items-center gap-2 font-sans font-medium text-center sm:text-left">
+          <span className="w-2.5 h-2.5 rounded-full bg-brand-red animate-pulse shrink-0"></span>
+          <span className="sm:hidden">Commercial procurement across Canada</span>
+          <span className="hidden sm:inline min-w-0 break-words">Commercial procurement desk and site delivery services across Canada</span>
         </div>
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-sans">
+        <div className="min-w-0 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-sans">
           <a href="tel:18005557878" className="flex items-center gap-1.5 hover:text-brand-surface transition-colors">
             <PhoneCall className="w-4 h-4 text-brand-red" />
             <span>1-800-555-TRUE (7878)</span>
           </a>
-          <a href="mailto:procurement@truenorthmattress.ca" className="flex items-center gap-1.5 hover:text-brand-surface transition-colors">
+          <a href="mailto:procurement@truenorthmattress.ca" className="min-w-0 flex items-center gap-1.5 hover:text-brand-surface transition-colors">
             <Mail className="w-4 h-4 text-brand-red" />
-            <span>procurement@truenorthmattress.ca</span>
+            <span className="min-w-0 break-all">procurement@truenorthmattress.ca</span>
           </a>
         </div>
       </div>
 
       {/* Main Sticky Header */}
       <header className="sticky top-0 bg-white/95 backdrop-blur-md border-b border-brand-border/80 z-40 shadow-saas-sm">
-        <div ref={dropdownRef} className="max-w-[92rem] mx-auto px-5 sm:px-8 lg:px-10 h-24 flex items-center justify-between">
+        <div ref={dropdownRef} className="relative max-w-[92rem] mx-auto px-4 sm:px-8 lg:px-10 h-20 lg:h-24 flex items-center justify-between gap-3">
           
           {/* Logo */}
-          <Logo variant="horizontal" onClick={() => handleNavClick('home')} />
+          <Logo variant="horizontal" onClick={() => handleNavClick('home')} className="ml-16 min-w-0 sm:ml-0" />
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-9 font-sans">
@@ -92,8 +108,9 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                 <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${activeDropdown === 'industries' ? 'rotate-180' : ''}`} />
               </button>
 
+              <AnimatePresence>
               {activeDropdown === 'industries' && (
-                <div className="absolute top-full left-0 mt-4 w-72 bg-white border border-brand-border shadow-saas-lg rounded-sm animate-in fade-in slide-in-from-top-2 duration-150 py-3 z-50">
+                <motion.div {...dropdownMotion} className="absolute top-full left-0 mt-4 w-72 bg-white border border-brand-border shadow-saas-lg rounded-sm py-3 z-50">
                   <div className="px-5 py-2 text-xs font-sans font-extrabold tracking-widest text-brand-gray uppercase border-b border-brand-border/40 mb-1">
                     Procurement Sectors
                   </div>
@@ -133,8 +150,9 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                   >
                     Industrial Camps
                   </button>
-                </div>
+                </motion.div>
               )}
+              </AnimatePresence>
             </div>
 
             <button
@@ -160,8 +178,9 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                 <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${activeDropdown === 'company' ? 'rotate-180' : ''}`} />
               </button>
 
+              <AnimatePresence>
               {activeDropdown === 'company' && (
-                <div className="absolute top-full left-0 mt-4 w-72 bg-white border border-brand-border shadow-saas-lg rounded-sm animate-in fade-in slide-in-from-top-2 duration-150 py-3 z-50">
+                <motion.div {...dropdownMotion} className="absolute top-full left-0 mt-4 w-72 bg-white border border-brand-border shadow-saas-lg rounded-sm py-3 z-50">
                   <div className="px-5 py-2 text-xs font-sans font-extrabold tracking-widest text-brand-gray uppercase border-b border-brand-border/40 mb-1">
                     About True North
                   </div>
@@ -183,8 +202,9 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                   >
                     Delivery & Service
                   </button>
-                </div>
+                </motion.div>
               )}
+              </AnimatePresence>
             </div>
 
             {/* Resources Dropdown */}
@@ -201,8 +221,9 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                 <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${activeDropdown === 'resources' ? 'rotate-180' : ''}`} />
               </button>
 
+              <AnimatePresence>
               {activeDropdown === 'resources' && (
-                <div className="absolute top-full left-0 mt-4 w-80 bg-white border border-brand-border shadow-saas-lg rounded-sm animate-in fade-in slide-in-from-top-2 duration-150 py-3 z-50">
+                <motion.div {...dropdownMotion} className="absolute top-full left-0 mt-4 w-80 bg-white border border-brand-border shadow-saas-lg rounded-sm py-3 z-50">
                   <div className="px-5 py-2 text-xs font-sans font-extrabold tracking-widest text-brand-gray uppercase border-b border-brand-border/40 mb-1">
                     Operational Support
                   </div>
@@ -243,8 +264,9 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
                   >
                     Case Studies
                   </button>
-                </div>
+                </motion.div>
               )}
+              </AnimatePresence>
             </div>
 
             <button
@@ -268,10 +290,10 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
           </div>
 
           {/* Mobile hamburger menu trigger */}
-          <div className="flex lg:hidden">
+          <div className="absolute left-4 top-1/2 z-10 flex -translate-y-1/2 lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-brand-navy hover:text-brand-red p-3 border border-brand-border rounded-sm bg-white"
+              className="text-white hover:text-white p-3 border border-brand-navy rounded-sm bg-brand-navy shadow-saas-sm"
               aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
@@ -282,16 +304,29 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
       </header>
 
       {/* Mobile slide-out navigation drawer */}
+      <AnimatePresence>
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden flex">
+        <motion.div
+          className="fixed inset-0 z-50 lg:hidden flex"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18 }}
+        >
           {/* Backdrop */}
-          <div
+          <motion.div
             className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity duration-300"
             onClick={() => setMobileMenuOpen(false)}
-          ></div>
+          ></motion.div>
 
           {/* Drawer content */}
-          <div className="relative flex flex-col w-full max-w-xs bg-white h-full shadow-2xl z-10 py-6 overflow-y-auto animate-in slide-in-from-right duration-250 ml-auto">
+          <motion.div
+            className="relative flex flex-col w-full max-w-xs bg-white h-full shadow-2xl z-10 py-6 overflow-y-auto ml-auto"
+            initial={{ x: 36, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 36, opacity: 0 }}
+            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+          >
             <div className="flex items-center justify-between px-6 pb-6 border-b border-brand-border">
               <span className="font-condensed text-xl font-bold text-brand-navy uppercase tracking-tight">Navigation Menu</span>
               <button
@@ -485,9 +520,10 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
               </div>
             </div>
 
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </>
   );
 };

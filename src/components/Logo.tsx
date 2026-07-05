@@ -58,7 +58,7 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'stacked', className = '',
         {/* Crisp Central Maple Leaf in Vibrant Red */}
         <g transform="translate(85, 80) scale(1.1)">
           <path
-            d="M 13.5 13 C 13.5 13 11 9 14 7 C 14 7 12.5 6 12 6 C 12.5 4 15 5 15 5 C 15 5 13.5 2 15.5 1.5 C 17.5 1 18.5 2 18.5 2 C 18.5 2 19.5 0 21 0 C 22.5 0 23.5 2 23.5 2 C 23.5 2 24.5 1 26.5 1.5 C 28.5 2 27 5 27 5 C 27 5 29.5 4 30 6 C 29.5 6 28 7 28 7 C 31 9 28.5 13 28.5 13 L 23.5 14.5 C 23.5 14.5 24 18 24.5 21 C 24.5 21 21.5 21.5 21 24 C 20.5 21.5 17.5 21 C 17.5 21 C 18 18 18.5 14.5 18.5 14.5 L 13.5 13 Z"
+            d="M21 0 L23 5 L28 3.5 L26.5 8.5 L31 10 L26.5 12.5 L29 17 L23.5 16 L22 21 L21 24 L20 21 L18.5 16 L13 17 L15.5 12.5 L11 10 L15.5 8.5 L14 3.5 L19 5 Z"
             fill="#E31B2B"
           />
         </g>
@@ -69,18 +69,18 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'stacked', className = '',
   if (variant === 'horizontal') {
     return (
       <div
-        className={`flex items-center gap-4 cursor-pointer select-none group ${className}`}
+        className={`flex items-center gap-3 sm:gap-4 cursor-pointer select-none group ${className}`}
         onClick={onClick}
       >
-        {renderCompassGraphic('w-16 h-11')}
-        <div className="flex flex-col text-left">
-          <span className="font-condensed text-2xl font-extrabold tracking-tight text-brand-navy leading-none group-hover:text-brand-red transition-colors">
+        {renderCompassGraphic('w-12 h-9 sm:w-16 sm:h-11')}
+        <div className="flex min-w-0 flex-col text-left">
+          <span className="font-condensed text-xl sm:text-2xl font-extrabold tracking-tight text-brand-navy leading-none group-hover:text-brand-red transition-colors">
             TRUE NORTH
           </span>
-          <span className="text-[11px] font-sans font-bold tracking-[0.2em] text-brand-deep leading-none mt-1">
+          <span className="text-[9px] sm:text-[11px] font-sans font-bold tracking-[0.12em] sm:tracking-[0.2em] text-brand-deep leading-none mt-1">
             MATTRESS SUPPLY
           </span>
-          <span className="text-[9px] font-sans text-brand-gray tracking-wider uppercase font-semibold mt-1">
+          <span className="hidden sm:block text-[9px] font-sans text-brand-gray tracking-wider uppercase font-semibold mt-1">
             INSTITUTIONAL SOLUTIONS
           </span>
         </div>

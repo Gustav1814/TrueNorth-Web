@@ -1,18 +1,72 @@
+# True North Mattress Supply
 
+Premium homepage concepts for a Canadian institutional mattress supplier serving shelters, campuses, healthcare facilities, correctional facilities, camps, and workforce housing.
 
-# Run and deploy your AI Studio app
+The current build is focused on client presentation: two distinct homepage directions, same brand system, same commercial procurement story.
 
-This contains everything you need to run your app locally.
+## Preview
 
-View your app in AI Studio: https://ai.studio/apps/ffec0d7e-1bd2-41be-8abd-0a984fb34781
+### Homepage Concept 01
 
-## Run Locally
+A bold industrial procurement direction with an immersive hero, sector pathways, product logic, compliance messaging, and operational credibility.
 
-**Prerequisites:**  Node.js
+![Homepage Concept 01 desktop](docs/screenshots/homepage-design-1-desktop.png)
 
+<p align="center">
+  <img src="docs/screenshots/homepage-design-1-mobile.png" alt="Homepage Concept 01 mobile" width="280" />
+</p>
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Homepage Concept 02
+
+A cleaner corporate-services direction inspired by premium capital/advisory websites: large editorial typography, metrics, image slider, product program table, procurement cards, and support solution blocks.
+
+![Homepage Concept 02 desktop](docs/screenshots/homepage-design-2-desktop.png)
+
+<p align="center">
+  <img src="docs/screenshots/homepage-design-2-mobile.png" alt="Homepage Concept 02 mobile" width="280" />
+</p>
+
+## Demo Routes
+
+```text
+Homepage Concept 01  /#/
+Homepage Concept 02  /#/home-design-2
+```
+
+The presentation build is intentionally homepage-only. Navigation elements are kept for realism, but the demo experience is locked to the two homepage concepts.
+
+## Built With
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Motion
+- Lucide icons
+
+## Local Setup
+
+```bash
+npm install
+npm run dev
+```
+
+The local server runs on:
+
+```text
+http://localhost:3000
+```
+
+## Quality Checks
+
+```bash
+npm run lint
+npm run build
+```
+
+## Project Notes
+
+- Brand palette follows the True North identity: deep navy, red, white, and cool institutional surface tones.
+- Both homepage concepts are responsive and checked at mobile and desktop widths.
+- Image assets are stored in `public/images`.
+- README preview screenshots are stored in `docs/screenshots`.
