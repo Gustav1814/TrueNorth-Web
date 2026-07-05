@@ -32,7 +32,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           
           {/* Logo Column */}
           <div className="lg:col-span-2 flex flex-col items-center md:items-start text-center md:text-left gap-6 border-b lg:border-b-0 pb-8 lg:pb-0 border-white/10">
-            <Logo variant="stacked" onClick={() => handleLinkClick('home')} className="bg-[#061A2D]" />
+            <Logo variant="stacked" onClick={() => handleLinkClick('home')} className="bg-white p-4" />
             <p className="text-xs font-sans text-brand-gray/90 max-w-sm mt-2 leading-relaxed">
               True North Mattress Supply is a dedicated Canadian commercial supplier of high-durability institutional sleep systems. Engineered for high-use facilities, public tenders, and repeat facility procurement programs nationwide.
             </p>

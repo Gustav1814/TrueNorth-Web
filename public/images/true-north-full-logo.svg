@@ -1,0 +1,36 @@
+<svg width="900" height="640" viewBox="0 0 900 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">True North Mattress Supply</title>
+  <desc id="desc">Compass and maple leaf logo for True North Mattress Supply institutional mattresses.</desc>
+  <path d="M200 302C210 175 315 76 443 76C571 76 676 175 686 302" stroke="#0A2342" stroke-width="7"/>
+  <path d="M225 302C235 190 328 103 443 103C558 103 651 190 661 302" stroke="#0A2342" stroke-width="3"/>
+  <g stroke="#0A2342" stroke-width="2">
+    <path d="M239 240L263 249"/>
+    <path d="M260 199L281 214"/>
+    <path d="M292 164L309 183"/>
+    <path d="M331 137L343 160"/>
+    <path d="M377 119L383 144"/>
+    <path d="M509 119L503 144"/>
+    <path d="M555 137L543 160"/>
+    <path d="M594 164L577 183"/>
+    <path d="M626 199L605 214"/>
+    <path d="M647 240L623 249"/>
+  </g>
+  <path d="M443 26L475 295H411L443 26Z" fill="#0A2342"/>
+  <path d="M443 26L443 295H411L443 26Z" fill="#1E3E62"/>
+  <path d="M443 295L640 151L514 312L443 295Z" fill="#0A2342"/>
+  <path d="M443 295L246 151L372 312L443 295Z" fill="#0A2342"/>
+  <path d="M443 295L785 300L510 335L443 295Z" fill="#0A2342"/>
+  <path d="M443 295L101 300L376 335L443 295Z" fill="#0A2342"/>
+  <path d="M443 295L549 211L491 324L443 295Z" fill="#314C70"/>
+  <path d="M443 295L337 211L395 324L443 295Z" fill="#314C70"/>
+  <path d="M443 174L461 229L517 211L497 266L552 288L495 304L525 357L466 346L443 410L420 346L361 357L391 304L334 288L389 266L369 211L425 229L443 174Z" fill="#E31B2B" stroke="#0A2342" stroke-width="5" stroke-linejoin="round"/>
+  <text x="450" y="438" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="96" font-weight="900" letter-spacing="3" fill="#0A2342">TRUE NORTH</text>
+  <line x1="95" y1="486" x2="205" y2="486" stroke="#3F3F3F" stroke-width="7"/>
+  <line x1="681" y1="486" x2="791" y2="486" stroke="#3F3F3F" stroke-width="7"/>
+  <text x="450" y="504" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="45" font-weight="900" letter-spacing="2" fill="#3F3F3F">MATTRESS SUPPLY</text>
+  <line x1="95" y1="550" x2="397" y2="550" stroke="#E31B2B" stroke-width="12"/>
+  <line x1="503" y1="550" x2="805" y2="550" stroke="#E31B2B" stroke-width="12"/>
+  <path d="M450 524L458 546L481 539L473 562L496 571L472 578L484 600L460 595L450 621L440 595L416 600L428 578L404 571L427 562L419 539L442 546L450 524Z" fill="#E31B2B" stroke="#0A2342" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="95" y="587" width="710" height="43" rx="8" fill="#0A2342"/>
+  <text x="450" y="619" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" letter-spacing="9" fill="white">INSTITUTIONAL MATTRESSES</text>
+</svg>

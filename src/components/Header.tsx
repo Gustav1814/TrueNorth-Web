@@ -78,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
 
       {/* Main Sticky Header */}
       <header className="sticky top-0 bg-white/95 backdrop-blur-md border-b border-brand-border/80 z-40 shadow-saas-sm">
-        <div ref={dropdownRef} className="relative max-w-[92rem] mx-auto px-4 sm:px-8 lg:px-10 h-20 lg:h-24 flex items-center justify-between gap-3">
+        <div ref={dropdownRef} className="relative max-w-[92rem] mx-auto px-4 sm:px-8 lg:px-10 h-24 flex items-center justify-between gap-3">
           
           {/* Logo */}
           <Logo variant="horizontal" onClick={() => handleNavClick('home')} className="ml-16 min-w-0 sm:ml-0" />
