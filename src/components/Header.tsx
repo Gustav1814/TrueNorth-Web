@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Logo } from './Logo';
 import { PageId } from '../types';
-import { Menu, X, ChevronDown, ChevronUp, Quote, ExternalLink, Mail, PhoneCall } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronUp, Quote, Mail, PhoneCall } from 'lucide-react';
 
 interface HeaderProps {
   currentPage: PageId;
@@ -48,6 +48,111 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
     setMobileMenuOpen(false);
   };
 
+  if (currentPage === 'home') {
+    return (
+      <>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-white focus:px-4 focus:py-3 focus:font-sans focus:font-bold focus:text-brand-navy focus:shadow-saas-lg"
+        >
+          Skip to main content
+        </a>
+
+        <header className="absolute inset-x-0 top-0 z-50 px-4 pt-4 text-white sm:px-6">
+          <div className="mx-auto flex h-[4.5rem] max-w-[96rem] items-center justify-between gap-4 rounded-2xl border border-white/10 bg-[#02070D]/86 px-5 shadow-[0_22px_70px_rgba(0,0,0,0.36)] backdrop-blur-xl sm:px-8">
+            <button
+              type="button"
+              onClick={() => handleNavClick('home')}
+              className="group shrink-0 transition-transform hover:scale-[1.01]"
+              aria-label="True North Mattress Supply home"
+            >
+              <span className="flex h-12 w-28 items-center justify-center overflow-hidden rounded-sm bg-white px-2 sm:h-14 sm:w-36">
+                <img
+                  src="/images/true-north-full-logo.svg"
+                  alt="True North Mattress Supply"
+                  className="h-full w-full object-contain"
+                />
+              </span>
+            </button>
+
+            <nav className="hidden items-center gap-8 lg:flex">
+              <button type="button" onClick={() => handleNavClick('products')} className="text-xs font-black uppercase tracking-[0.18em] text-white/76 transition-colors hover:text-white">
+                Products
+              </button>
+              <button type="button" onClick={() => handleNavClick('resources')} className="text-xs font-black uppercase tracking-[0.18em] text-white/76 transition-colors hover:text-white">
+                Resources
+              </button>
+              <button type="button" onClick={() => document.getElementById('sectors')?.scrollIntoView({ behavior: 'smooth' })} className="text-xs font-black uppercase tracking-[0.18em] text-white/76 transition-colors hover:text-white">
+                Sectors
+              </button>
+              <button type="button" onClick={() => handleNavClick('contact')} className="text-xs font-black uppercase tracking-[0.18em] text-white/76 transition-colors hover:text-white">
+                Company
+              </button>
+            </nav>
+
+            <button
+              type="button"
+              onClick={() => handleNavClick('quote')}
+              className="hidden rounded-full bg-brand-red px-6 py-3 text-xs font-black uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#B91622] sm:inline-flex"
+            >
+              Contact Us
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="justify-self-end border border-white/14 bg-white/[0.04] p-3 text-white backdrop-blur-md lg:hidden"
+              aria-label="Open menu"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+          </div>
+        </header>
+
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              className="fixed inset-0 z-[90] bg-[#02070D]/96 px-6 py-7 text-white lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="flex items-start justify-between">
+                <span className="font-condensed text-3xl font-black uppercase leading-none text-white/84">
+                  True North
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="border border-white/14 p-3"
+                  aria-label="Close menu"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+
+              <div className="mt-14 grid gap-5 font-condensed text-4xl font-black uppercase leading-none">
+                <button type="button" onClick={() => handleNavClick('products')} className="text-left text-white/84">
+                  Products
+                </button>
+                <button type="button" onClick={() => handleNavClick('resources')} className="text-left text-white/84">
+                  Resources
+                </button>
+                <button type="button" onClick={() => handleNavClick('quote')} className="text-left text-brand-red">
+                  Request Quote
+                </button>
+                <button type="button" onClick={() => handleNavClick('contact')} className="text-left text-white/84">
+                  Contacts
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </>
+    );
+  }
+
   return (
     <>
       <a
@@ -57,22 +162,32 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
         Skip to main content
       </a>
 
-      {/* Top operational strip (extremely clean, no telemetry, pure B2B support info) */}
-      <div className="bg-brand-deep text-white text-sm py-2.5 px-4 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-white/10 relative z-50 overflow-hidden">
-        <div className="min-w-0 flex items-center gap-2 font-sans font-medium text-center sm:text-left">
-          <span className="w-2.5 h-2.5 rounded-full bg-brand-red animate-pulse shrink-0"></span>
-          <span className="sm:hidden">Commercial procurement across Canada</span>
-          <span className="hidden sm:inline min-w-0 break-words">Commercial procurement desk and site delivery services across Canada</span>
-        </div>
-        <div className="min-w-0 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-sans">
-          <a href="tel:18005557878" className="flex items-center gap-1.5 hover:text-brand-surface transition-colors">
-            <PhoneCall className="w-4 h-4 text-brand-red" />
-            <span>1-800-555-TRUE (7878)</span>
-          </a>
-          <a href="mailto:procurement@truenorthmattress.ca" className="min-w-0 flex items-center gap-1.5 hover:text-brand-surface transition-colors">
-            <Mail className="w-4 h-4 text-brand-red" />
-            <span className="min-w-0 break-all">procurement@truenorthmattress.ca</span>
-          </a>
+      {/* Top operational strip */}
+      <div className="relative z-50 overflow-hidden border-b border-white/10 bg-brand-deep text-white">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-red/80 to-transparent" />
+        <div className="mx-auto flex min-h-10 max-w-[92rem] items-center justify-between gap-3 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] sm:px-8 lg:px-10">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="h-2 w-2 shrink-0 bg-brand-red" />
+            <span className="truncate">Canada-wide institutional mattress supply</span>
+          </div>
+
+          <div className="hidden items-center gap-2 text-white/72 xl:flex">
+            <span className="border border-white/12 bg-white/[0.06] px-3 py-1">Bulk Orders</span>
+            <span className="border border-white/12 bg-white/[0.06] px-3 py-1">Spec Docs</span>
+            <span className="border border-white/12 bg-white/[0.06] px-3 py-1">Freight Desk</span>
+          </div>
+
+          <div className="flex shrink-0 items-center gap-4 tracking-[0.12em]">
+            <a href="tel:18005557878" className="flex items-center gap-1.5 transition-colors hover:text-brand-surface">
+              <PhoneCall className="h-3.5 w-3.5 text-brand-red" />
+              <span className="hidden sm:inline">1-800-555-TRUE</span>
+              <span className="sm:hidden">Call</span>
+            </a>
+            <a href="mailto:procurement@truenorthmattress.ca" className="hidden items-center gap-1.5 transition-colors hover:text-brand-surface md:flex">
+              <Mail className="h-3.5 w-3.5 text-brand-red" />
+              <span>Procurement Desk</span>
+            </a>
+          </div>
         </div>
       </div>
 

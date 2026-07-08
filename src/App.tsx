@@ -5,7 +5,6 @@ import { Footer } from './components/Footer';
 
 // Pages
 import { Home } from './pages/Home';
-import { HomeDesignTwo } from './pages/HomeDesignTwo';
 import { IndustryPage } from './pages/IndustryPage';
 import { Products } from './pages/Products';
 import { About } from './pages/About';
@@ -17,7 +16,19 @@ import { Contact } from './pages/Contact';
 
 const parseHash = (hash: string): PageId => {
   if (!hash || hash === '#/' || hash === '#') return 'home';
-  if (hash === '#/home-design-2') return 'home-design-2';
+  if (hash === '#/industries/shelters') return 'shelters';
+  if (hash === '#/industries/summer-camps') return 'summer-camps';
+  if (hash === '#/industries/university-housing') return 'university-housing';
+  if (hash === '#/industries/hospitals') return 'hospitals';
+  if (hash === '#/industries/correctional-facilities') return 'correctional-facilities';
+  if (hash === '#/industries/industrial-camps') return 'industrial-camps';
+  if (hash === '#/products') return 'products';
+  if (hash === '#/company/about') return 'about';
+  if (hash === '#/company/quality') return 'quality';
+  if (hash === '#/company/delivery') return 'delivery';
+  if (hash === '#/resources') return 'resources';
+  if (hash === '#/request-a-quote') return 'quote';
+  if (hash === '#/contact') return 'contact';
   return 'home';
 };
 
@@ -25,8 +36,6 @@ const getHashFromPageId = (pageId: PageId): string => {
   switch (pageId) {
     case 'home':
       return '#/';
-    case 'home-design-2':
-      return '#/home-design-2';
     case 'shelters':
       return '#/industries/shelters';
     case 'summer-camps':
@@ -60,7 +69,6 @@ const getHashFromPageId = (pageId: PageId): string => {
 
 const pageTitles: Record<PageId, string> = {
   home: 'True North Mattress Supply | Institutional Mattresses Canada',
-  'home-design-2': 'Homepage Design 2 | True North Mattress Supply',
   shelters: 'Shelter Mattresses | True North Mattress Supply',
   'summer-camps': 'Summer Camp Mattresses | True North Mattress Supply',
   'university-housing': 'University Housing Mattresses | True North Mattress Supply',
@@ -79,8 +87,6 @@ const pageTitles: Record<PageId, string> = {
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>(() => parseHash(window.location.hash));
   const [selectedIndustryForQuote, setSelectedIndustryForQuote] = useState<string>('');
-  const usesStandaloneChrome = currentPage === 'home-design-2';
-  const isHomepageDemo = currentPage === 'home' || currentPage === 'home-design-2';
 
   useEffect(() => {
     // Initial load parse
@@ -107,10 +113,6 @@ export default function App() {
   }, [currentPage]);
 
   const handleNavigate = (pageId: PageId) => {
-    if (pageId !== 'home' && pageId !== 'home-design-2') {
-      return;
-    }
-
     window.location.hash = getHashFromPageId(pageId);
     setCurrentPage(pageId);
   };
@@ -123,8 +125,6 @@ export default function App() {
     switch (currentPage) {
       case 'home':
         return <Home onNavigate={handleNavigate} />;
-      case 'home-design-2':
-        return <HomeDesignTwo onNavigate={handleNavigate} />;
       
       // Reusable Industry Pages
       case 'shelters':
@@ -179,32 +179,13 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-brand-bg text-brand-charcoal antialiased">
-      {!usesStandaloneChrome && (
-        <Header currentPage={currentPage} onNavigate={handleNavigate} />
-      )}
-
-      {isHomepageDemo && (
-        <button
-          type="button"
-          onClick={() => handleNavigate(currentPage === 'home' ? 'home-design-2' : 'home')}
-          className="fixed bottom-4 right-4 z-[70] rounded-full border border-brand-border bg-white px-4 py-3 font-condensed text-sm font-black uppercase tracking-wider text-brand-navy shadow-saas-lg transition-colors hover:border-brand-red hover:text-brand-red sm:bottom-auto sm:right-6 sm:top-28 sm:rounded-sm sm:px-5"
-        >
-          <span className="sm:hidden">
-            {currentPage === 'home' ? 'Design 2' : 'Design 1'}
-          </span>
-          <span className="hidden sm:inline">
-            {currentPage === 'home' ? 'View Design 2' : 'View Design 1'}
-          </span>
-        </button>
-      )}
+      <Header currentPage={currentPage} onNavigate={handleNavigate} />
 
       <main id="main-content" className="flex-1 flex flex-col">
         {renderActivePage()}
       </main>
 
-      {!isHomepageDemo && (
-        <Footer onNavigate={handleNavigate} />
-      )}
+      <Footer onNavigate={handleNavigate} />
     </div>
   );
 }

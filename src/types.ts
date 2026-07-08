@@ -5,7 +5,6 @@
 
 export type PageId =
   | 'home'
-  | 'home-design-2'
   | 'shelters'
   | 'summer-camps'
   | 'university-housing'
